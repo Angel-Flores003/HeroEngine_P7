@@ -15,14 +15,25 @@ namespace HeroEngine_P7.Core.Models
             WarCry = warcry;
         }
 
-        public override void ShowUp() => Console.WriteLine($"[{GetType().Name}] {Name} | Level: {Level}" +
+        public Warrior(string? name, int level) : base(name, level)
+        {
+            MaxHP = 50 * Level;
+            CurrentHP = MaxHP;
+            Armor = 15 * Level;
+            WarCry = "My code compiles on the first try!";
+        }
+
+        public override string ToString()
+        {
+            return $"[{GetType().Name}] {Name} | Level: {Level}" +
             $"\nHP: {CurrentHP}/{MaxHP} | Armor: {Armor}" +
-            $"\nBattle Cry: {WarCry}");
-        
+            $"\nBattle Cry: {WarCry}";
+        }
+
         public override void Attack() 
         {
-            int Attack = 20;
-            Utils.CalculateAttack(Attack, Name);
+            const int Attack = 15;
+            if (CurrentHP > 0) Utils.CalculateAttack(Attack, Name);
         }
 
         public override void TakeDamage(int dmg)
@@ -30,8 +41,15 @@ namespace HeroEngine_P7.Core.Models
             int recivedmg = dmg - Armor;
             CurrentHP -= recivedmg;
 
-            Console.WriteLine($"{Name} receives {dmg} damage -> absorbed {Armor} by armor -> net damage: {recivedmg}" +
+            if (CurrentHP < 0) Console.WriteLine($"{Name} is already defeated");
+            else Console.WriteLine($"{Name} receives {dmg} damage -> absorbed {Armor} by armor -> net damage: {recivedmg}" +
                 $"\nHP: {CurrentHP}/{MaxHP}");
+        }
+
+        public override int Initiative()
+        {
+            Random random = new Random();
+            return random.Next(1, 21) - 5;
         }
     }
 }
