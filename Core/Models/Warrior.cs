@@ -30,15 +30,19 @@ namespace HeroEngine_P7.Core.Models
             $"\nBattle Cry: {WarCry}";
         }
 
-        public override void Attack() 
+        public override void Attack(Humanoid_Individual hum) 
         {
             const int Attack = 15;
-            if (CurrentHP > 0) Utils.CalculateAttack(Attack, Name);
+            int dmg = 0;
+
+            if (CurrentHP > 0) dmg = Utils.CalculateAttack(Attack, Name);
+            hum.TakeDamage(dmg);
         }
 
         public override void TakeDamage(int dmg)
         {
             int recivedmg = dmg - Armor;
+            if (recivedmg < 0) recivedmg = 0;
             CurrentHP -= recivedmg;
 
             if (CurrentHP < 0) Console.WriteLine($"{Name} is already defeated");
@@ -46,10 +50,10 @@ namespace HeroEngine_P7.Core.Models
                 $"\nHP: {CurrentHP}/{MaxHP}");
         }
 
-        public override int Initiative()
+        public override void Initiative()
         {
             Random random = new Random();
-            return random.Next(1, 21) - 5;
+            InitiativeVal = random.Next(1, 21) - 5;
         }
     }
 }
