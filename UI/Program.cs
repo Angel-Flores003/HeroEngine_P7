@@ -13,7 +13,7 @@ public class Program
 
         List<Hero> heroes = new List<Hero>();
         heroes.Add(new Warrior("Bakugo", 1, 130, 15, "Shineee"));
-        heroes.Add(new Mage("Megumin", 3, 90, [], 40, 5));
+        heroes.Add(new Mage("Megumin", 3, 90, [], 1000, 5));
         heroes.Add(new Rogue("Putput", 5, 43, 4));
         heroes.Add(new Warrior("Noun", 2));
         heroes.Add(new Mage("Sasha", 3));
@@ -44,8 +44,13 @@ public class Program
         List<Enemics> enemics = new List<Enemics>();
         enemics = Utils.LoadEnemics(enemics);
 
-
-
+        foreach (var hero in heroes)
+        {
+            if (hero is Mage mage)
+            {
+                mage.UseAbility(mage.Abilities[1], enemics.Cast<Humanoid_Individual>().ToList());
+            }
+        }
 
 
 
