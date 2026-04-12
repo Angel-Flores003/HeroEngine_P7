@@ -10,10 +10,13 @@ namespace HeroEngine_P7.Core.Models
 
         public Boss_Bug_Primordial(string? name, int level) : base(name, level) { }
 
-        public override void Attack()
+        public override void Attack(Humanoid_Individual hum)
         {
             const int attack  = 20;
-            if (CurrentHP > 0) Utils.CalculateAttack(attack, Name);
+            int dmg = 0;
+
+            if (CurrentHP > 0) dmg = Utils.CalculateAttack(attack, Name);
+            hum.TakeDamage(dmg);
         }
     }
 }

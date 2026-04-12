@@ -32,7 +32,7 @@ namespace HeroEngine_P7.Core.Models
 
         public void ShowAbilities()
         {
-            Console.WriteLine($"==================================================\n   {Name}'s Ability Loadout\n==================================================");
+            Console.WriteLine($"==================================================\n   {Name}'s Ability Loadout     {Manna}\n==================================================");
             for (int i = 0; i < Abilities.Count; i++)
             {
                 Console.WriteLine($"[{Abilities[i].typeRarity}] {Abilities[i].NameHability} | Type: {Abilities[i].typeHability} | Cost: {Abilities[i].Cost}");
@@ -42,18 +42,10 @@ namespace HeroEngine_P7.Core.Models
 
         public void AddAbility(IAbility ability)
         {
-            bool existe = Abilities.Any(a =>
-                a.NameHability.Equals(ability.NameHability, StringComparison.OrdinalIgnoreCase));
-
-            if (!existe)
+            if (!Abilities.Any(a => a.NameHability == ability.NameHability))
             {
                 Abilities.Add(ability);
             }
-
-            /*if (!Abilities.Any(a => a.NameHability == ability.NameHability))
-            {
-                Abilities.Add(ability);
-            }*/
         }
 
         public bool CanUse(IAbility ability)

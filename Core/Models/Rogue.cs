@@ -24,20 +24,22 @@ namespace HeroEngine_P7.Core.Models
             return dmg * MULTIPLIER;
         }
 
-        public override void Attack()
+        public override void Attack(Humanoid_Individual hum)
         {
             int attack = 10;
             Random random = new Random();
             int furtive = random.Next(1, 4);
+            int dmg = 0;
 
             if (furtive == 1) attack = Furtive(attack);
-            if (CurrentHP > 0) Utils.CalculateAttack(attack, Name);
+            if (CurrentHP > 0) dmg = Utils.CalculateAttack(attack, Name);
+            hum.TakeDamage(dmg);
         }
 
-        public override int Initiative()
+        public override void Initiative()
         {
             Random random = new Random();
-            return random.Next(1, 21) + 10;
+            InitiativeVal = random.Next(1, 21) + 10;
         }
     }
 }
